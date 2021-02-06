@@ -21,8 +21,9 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "build": "ng build",
+    "build:prod": "ng build --prod --output-path docs --base-href \"https://hhharm.github.io/music-exercises/\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

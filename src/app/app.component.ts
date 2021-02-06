@@ -1,4 +1,15 @@
-import { AfterViewChecked, AfterViewInit,  ChangeDetectionStrategy, ChangeDetectorRef,  Component, HostBinding, OnInit, TemplateRef,  VERSION, ViewChild } from "@angular/core";
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  OnInit,
+  TemplateRef,
+  VERSION,
+  ViewChild,
+} from "@angular/core";
 import * as Tone from "tone";
 import { Exercise, exercises, upDownDirs } from "./data/exercise";
 import { allNotes, notes } from "./data/notes";
@@ -11,17 +22,18 @@ import { isHigher, getRandomNote } from "./utils/note.utils";
   selector: "my-app",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  public today = Date.now();
   public exercises = exercises;
   public answer: string = "";
   public isCorrect: boolean = false;
-  public counter: {correct: number, total: number} = {correct: 0, total: 0};
+  public counter: { correct: number; total: number } = { correct: 0, total: 0 };
   public answeredAtLeastOnce = false;
   public exercise: TemplateRef<void>;
   public allNotes = allNotes;
+  public exerciseKeys = [];
+  public started = false;
 
   private correctAnswer: Answer;
   private toPlay: Note[];
@@ -29,22 +41,29 @@ export class AppComponent implements OnInit, AfterViewInit {
   //thing that plays music
   private synth;
 
-  @ViewChild('exerciseUpDown')
+  @ViewChild("exerciseUpDown")
   exerciseUpDown: TemplateRef<void>;
-  @ViewChild('whichNote')
+  @ViewChild("whichNote")
   whichNote: TemplateRef<void>;
 
   @HostBinding("class.app") get classApp() {
     return true;
   }
 
-  constructor(private cdr: ChangeDetectorRef){}
+  constructor(private cdr: ChangeDetectorRef) {}
   ngOnInit() {
     //create a synth and connect it to the main output (your speakers)
     this.synth = new Tone.Synth().toDestination();
+    this.exerciseKeys = Object.keys(exercises);
   }
-  ngAfterViewInit() {
-    this.chooseExercise(exercises.note);
+  ngAfterViewInit() {}
+  init() {
+    if (!this.started) {
+      Tone.start();
+      this.chooseExercise(exercises.note);
+      this.started = true;
+      this.cdr.markForCheck();
+    }
   }
   getNoteName(note: number) {
     return notes[note];
@@ -54,9 +73,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     const direction = upDownDirs.get(this.correctAnswer);
     this.isCorrect = this.correctAnswer === value;
     this.answer = this.isCorrect ? "Верно!" : "Неверно.";
-    this.answer += ` Мелодия идёт ${direction}. Это были ноты ${this.toPlay.map(
-      ({note}) => note
-    ).join(", ")}`;
+    this.answer += ` Мелодия идёт ${direction}. Это были ноты ${this.toPlay
+      .map(({ note }) => note)
+      .join(", ")}`;
     this.updateCounter();
     this.cdr.markForCheck();
   }
@@ -71,13 +90,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   public chooseExercise(exercise: Exercise): void {
     switch (exercise.type) {
       case "upDown":
-      this.exercise = this.exerciseUpDown;
-      this.upDownExercise();
-      break;
+        this.exercise = this.exerciseUpDown;
+        this.upDownExercise();
+        break;
       case "whichNote":
-      this.exercise = this.whichNote;
-      this.whichNoteExercise();
-      break;
+        this.exercise = this.whichNote;
+        this.whichNoteExercise();
+        break;
     }
     this.cdr.markForCheck();
   }
@@ -108,14 +127,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   public repeat() {
-    let when = Tone.now()
-    this.toPlay.forEach(note => {
+    let when = Tone.now();
+    this.toPlay.forEach((note) => {
       this.playNote(note, when);
       when += 0.5;
-    })
+    });
   }
 
-  private playNote({note, duration}: Note, when: number): void {
+  private playNote({ note, duration }: Note, when: number): void {
     // note format: note itself + octava (e.g. c4)
     // duration format: have no idea. e.g. 8n
     this.synth.triggerAttackRelease(note, duration, when);
