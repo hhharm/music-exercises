@@ -9,7 +9,7 @@
     var(--header-height) var(--nav-size) var(--sidebar-size) auto
     var(--header-height);
 
-  --header-height: 30px;
+  --header-height: 50px;
   --header-padding: 10px;
   --nav-size: clamp(50px, 70px, 20vh);
   --sidebar-size: clamp(25px, 45px, 15vh);
