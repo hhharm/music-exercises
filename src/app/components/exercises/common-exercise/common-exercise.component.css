@@ -1,0 +1,119 @@
+.btn {
+  line-height: 30px;
+  cursor: pointer;
+  margin: 5px;
+  max-width: 200px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+  border-radius: 15px;
+  border: 1px solid;
+}
+.btn._active {
+  background-color: lightseagreen;
+  color: white;
+}
+.btn:hover {
+  border: 1px solid;
+}
+.btn:focus {
+  border: 1 solid;
+  outline: none;
+}
+.btn._disabled {
+  background-color: grey;
+  pointer-events: none;
+  cursor: default;
+}
+.btn-answer {
+  transition-property: all;
+  transition-duration: 0.6s;
+  transition-timing-function: ease;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 45px;
+  color: var(--answer-button-color);
+  background-color: var(--answer-button-bg-color);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+  outline: 1px solid;
+  outline-color: rgba(255, 255, 255, 0.5);
+  outline-offset: 0px;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.btn-answer._small {
+  line-height: 25px;
+  max-width: 50px;
+}
+.btn-answer._medium {
+  line-height: 15px;
+  font-size: 12px;
+  max-width: 110px;
+  height: 50px;
+}
+.btn-answer:hover {
+  border: 1px solid;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388;
+}
+
+.app__exrcs {
+  height: 100%;
+  display: flex;
+  margin: 0 auto;
+  max-width: 500px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.app__exrcs-rule-buttons,
+.app__exrcs-question-area {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  width: 100%;
+}
+
+.app__exrcs-question {
+  margin: auto 20px auto 0;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 1em;
+  line-height: 1.5em;
+  font-style: oblique;
+}
+.app_exrcs-answer {
+  letter-spacing: 2px;
+  font-size: 1em;
+  line-height: 1.5em;
+  font-style: oblique;
+  text-align: center;
+  padding: 10px;
+  color: brown;
+  height: clamp(100px, 100px, 15vh);
+}
+.app__exrcs-answers {
+  display: flex;
+  flex-wrap: wrap;
+}
+.app_exrcs-answer._correct {
+  color: green;
+}
+
+.app__exrcs-counter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 10px;
+  font-size: 1em;
+  color: seagreen;
+}
+.app__exrcs-counter ._important {
+  font-weight: bold;
+}

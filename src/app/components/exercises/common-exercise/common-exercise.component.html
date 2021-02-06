@@ -1,0 +1,48 @@
+<div class="app__exrcs">
+  <div>
+    <div class="app__exrcs-question-area">
+      <p class="app__exrcs-question">{{ question }}</p>
+      <div class="app__exrcs-answers">
+        <button
+          *ngFor="let answer of answers"
+          class="btn btn-answer {{ answerStyleClass }}"
+          [class._disabled]="answeredAtLeastOnce"
+          (click)="checkCorrect(answer)"
+        >
+          {{ answer }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <section class="app__exrcs-rule-buttons">
+    <button
+      class="btn"
+      [class._active]="answeredAtLeastOnce"
+      (click)="repeat()"
+    >
+      Повторить
+    </button>
+    <button
+      class="btn"
+      [class._active]="answeredAtLeastOnce"
+      (click)="nextExercise()"
+    >
+      {{ nextText }}
+    </button>
+  </section>
+  <section class="app_exrcs-answer" [class._correct]="isCorrect">
+    <span *ngIf="answeredAtLeastOnce">{{
+      answer + " " + additionalAnswerText
+    }}</span>
+  </section>
+  <div class="app__exrcs-counter">
+    <p>
+      Правильных ответов:
+      <span class="_important">{{ counter.correct + " " }}</span>
+      <ng-container *ngIf="counter.total">
+        из
+        <span>{{ counter.total }}</span>
+      </ng-container>
+    </p>
+  </div>
+</div>

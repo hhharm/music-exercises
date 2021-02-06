@@ -1,8 +1,8 @@
-import { notes } from "../data/notes";
+import { tones } from "../data/notes";
 
 export type Note = {
   note: string;
   duration: string;
   high: number;
-  tone: notes;
+  tone: tones;
 };

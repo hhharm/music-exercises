@@ -1,1 +1,1 @@
-export type Answer = any;
+export type Answer = boolean | string | number;

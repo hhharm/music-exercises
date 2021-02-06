@@ -5,120 +5,49 @@
 <nav class="app-nav">
   <!-- <ng-container *ngTemplateOutlet="piano"> -->
   <!-- </ng-container> -->
-  <ng-container>
+  <ng-container *ngIf="started">
     <ng-container *ngFor="let key of exerciseKeys">
       <ng-container
-        *ngTemplateOutlet="taskCard; context: { $implicit: exercise[key] }"
+        *ngTemplateOutlet="taskCard; context: { $implicit: exercises[key] }"
       >
       </ng-container>
     </ng-container>
   </ng-container>
 </nav>
 
-<main class="app-main" (click)="init()">
-  <div style="position: absolute; top: 50%; left: 50%" *ngIf="!started">
-    Click anywhere to start
+<main class="app-main">
+  <div
+    style="position: absolute; top: calc(50% - 100px); left: calc(50% - 100px)"
+    *ngIf="!started; else exercise"
+  >
+    <p>Кликните по экрану, чтобы начать</p>
   </div>
-  <ng-container *ngTemplateOutlet="exercise"> </ng-container>
 </main>
 
-<div class="app-aside" *ngIf="counter.total">
-  <p>
-    Правильных ответов: <span class="_important">{{ counter.correct }}</span> из
-    <span>{{ counter.total }}</span>
-  </p>
-</div>
+<div class="app-aside"></div>
 
-<footer class="app-footer">(c)</footer>
+<footer class="app-footer"></footer>
 
 <ng-template #taskCard let-exercise>
-  <button class="app__exrcs-card" (click)="chooseExercise(exercise)">
+  <button
+    class="app__exrcs-card"
+    [class._active]="exercise.type === currentExerciseType"
+    (click)="chooseExercise(exercise)"
+  >
     {{ exercise.name }}
   </button>
 </ng-template>
 
 <ng-template #exerciseUpDown>
-  <div class="app__exrcs">
-    <div>
-      <div class="app__exrcs-question-area">
-        <p class="app__exrcs-question">Куда идёт мелодия?</p>
-        <div class="app__exrcs-answers">
-          <button
-            class="btn btn-answer"
-            [class._disabled]="answeredAtLeastOnce"
-            (click)="checkCorrectUpDown(true)"
-          >
-            Вверх
-          </button>
-          <button
-            class="btn btn-answer"
-            [class._disabled]="answeredAtLeastOnce"
-            (click)="checkCorrectUpDown(false)"
-          >
-            Вниз
-          </button>
-        </div>
-      </div>
-    </div>
-    <section class="app__exrcs-rule-buttons">
-      <button
-        class="btn"
-        [class._active]="answeredAtLeastOnce"
-        (click)="repeat()"
-      >
-        Повторить
-      </button>
-      <button
-        class="btn"
-        [class._active]="answeredAtLeastOnce"
-        (click)="upDownExercise()"
-      >
-        Следующая мелодия
-      </button>
-    </section>
-    <section class="app_exrcs-answer" [class._correct]="isCorrect">
-      {{ answer }}
-    </section>
-  </div>
+  <app-up-down-exercise></app-up-down-exercise>
 </ng-template>
 
 <ng-template #whichNote>
-  <div class="app__exrcs">
-    <div>
-      <div class="app__exrcs-question-area">
-        <p class="app__exrcs-question">Какая это нота?</p>
-        <div class="app__exrcs-answers">
-          <button
-            *ngFor="let note of allNotes"
-            class="btn btn-answer _small"
-            [class._disabled]="answeredAtLeastOnce"
-            (click)="checkCorrectWhichNote(note)"
-          >
-            {{ getNoteName(note) }}
-          </button>
-        </div>
-      </div>
-    </div>
-    <section class="app__exrcs-rule-buttons">
-      <button
-        class="btn"
-        [class._active]="answeredAtLeastOnce"
-        (click)="repeat()"
-      >
-        Повторить
-      </button>
-      <button
-        class="btn"
-        [class._active]="answeredAtLeastOnce"
-        (click)="whichNoteExercise()"
-      >
-        Следующая нота
-      </button>
-    </section>
-    <section class="app_exrcs-answer" [class._correct]="isCorrect">
-      {{ answer }}
-    </section>
-  </div>
+  <app-note-exercise></app-note-exercise>
+</ng-template>
+
+<ng-template #interval>
+  <app-interval-exercise></app-interval-exercise>
 </ng-template>
 
 <ng-template #piano>

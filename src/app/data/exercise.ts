@@ -1,4 +1,6 @@
-export type ExerciseType = "upDown" | "whichNote";
+import { Answer } from "../types/exercise";
+
+export type ExerciseType = "upDown" | "whichNote" | "interval";
 export type Exercise = {
   name: string;
   type: ExerciseType;
@@ -6,11 +8,11 @@ export type Exercise = {
 
 export const exercises: Record<string, Exercise> = {
   upDown: { name: "Вверх или вниз?", type: "upDown" },
-  // interval: { name: "Какой интервал?" },
-  note: { name: "Какая нота?", type: "whichNote" }
+  interval: { name: "Какой интервал?", type: "interval" },
+  note: { name: "Какая нота?", type: "whichNote" },
 };
 
-export const upDownDirs: Map<boolean, string> = new Map([
+export const upDownDirs: Map<Answer, string> = new Map([
   [true, "вверх"],
-  [false, "вниз"]
+  [false, "вниз"],
 ]);
