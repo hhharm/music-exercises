@@ -19,7 +19,7 @@
   --bg-color: #f5f5ef;
   --button-color: #cddefb;
   --answer-button-color: white;
-  --answer-button-bg-color: lightgreen;
+  --answer-button-bg-color: #416641;
 }
 .app-header {
   height: var(--header-height);
